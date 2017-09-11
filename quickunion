@@ -1,0 +1,53 @@
+// package whatever; // don't place package name!
+
+import java.io.*;
+
+class QuickUnion {
+    int n;
+    int id[];
+    public QuickUnion(int _n) {
+        
+        id = new int[_n];
+        for (int i = 0; i < _n; i++) {
+            id[i] = i;
+        }
+        n = _n;
+    }
+    
+    public int Root(int index) {
+        while (id[index] != index) {
+            index = id[index];
+        }
+        return index;
+    }
+    
+    public void Union(int p, int q) {
+        int rootq = Root(q);
+        int rootp = Root(p);
+        if (rootq != rootp) {
+            id[rootq] = rootp;
+        }
+        for(int i= 0; i < n; i++) {
+            System.out.print(id[i]);
+        }
+        System.out.println();
+    }
+    public boolean Connected(int p, int q) {
+        return (Root(p) == Root(q));
+    }
+    
+    public static void main(String args[]) {
+        QuickUnion qu = new QuickUnion(8);
+        qu.Union(0,1);
+        qu.Union(3,4);
+        qu.Union(5,6);
+        qu.Union(0,6);
+        //qu.Union(2,6);
+        System.out.println(qu.Connected(1,2));
+        /*00234567
+        00233567
+        00233557
+        00233057
+        false*/
+    }
+}
